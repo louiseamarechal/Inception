@@ -1,0 +1,13 @@
+Once in the Docker folder :
+  1. docker build <path_to_docker_folder>
+      # this command will build our container
+      # folder where you have your Dockerfile
+      # -t option allow you to give it a name
+          -> docker build -t nginx . ('.' is for current path)
+
+  2. docker image ls
+      # will show you all your images
+
+  3. docker run -it nginx
+      # will run your image
+      # -it will open your container's terminal -> to close it 'exit'
