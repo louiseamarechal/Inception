@@ -13,5 +13,8 @@ then
 fi
 
 wp core install --title=Inception \
-	--admin_user=$ADMIN_USER \
-	--admin_password=$ADMIN_PASSWORD
+		--admin_user=$ADMIN_USER \
+		--admin_password=$ADMIN_PASSWORD
+
+wp user_create $USER_NAME \
+		--user_pass=$USER_PASSWORD
