@@ -1,0 +1,99 @@
+version: "3.9"
+services:                           # liste des services qui composent l'application
+  mariadb:                          # On precise qu'on run le container avec la database MariaDB
+    container_name: mariadb			    # Le nom du container qui va etre cree
+    networks:                       # La liste des networks auquel le container devra etre connecte
+      - inception
+    build:                          # La configuration qui va permettre de build la Docker Image
+      context: requirements/mariadb # ou se trouve notre Dockerfile
+      dockerfile: Dockerfile			  # le nom du Dockerfile
+    env_file: .env                  # le fichier d'environnement pour transmettre les variables
+    volumes:                        # liste des volumes qui devront etre set up sur notre container
+      - mariadb:/var/lib/mysql
+    restart: unless-stopped         # politique de redemarrage pour le container : il redemarrera sauf s'il est arrete manuellement (on s'assure qu'en cas d'exit imprevu ou de crash d'un container l'application reste disponible)
+    expose:                         # list des ports qui devront etre exposes par le container
+      - "3306"                        # C'est le port par defaut sur lequel le serveur écoute pour recevoir des connexions et des requêtes de bases de données MariaDB
+                                      # Ici, on precise qu'on veut pouvoir accéder à la base de données depuis un autre conteneur ou depuis l'hôte Docker en utilisant le port 3306
+nginx:
+  container_name: nginx
+  networks:
+    - inception
+  depends_on:        			         # on precise qu'on ne veut pas démarrer nginx tant que WordPress n'a pas démarré.
+    - wordpress
+  build: 
+    context: requirements/nginx
+    dockerfile: Dockerfile
+  env_file: .env
+  volumes:
+    - wordpress:/var/www/wordpress
+  ports:
+    - "443:443" 		              # on indique le port qui sera exposé a la machine locale
+  restart: on-failure 		        # le container redémarrera uniquement en cas de crash.
+
+wordpress:
+  container_name: wordpress
+  env_file: .env
+  volumes:
+    - wordpress:/var/www/wordpress
+  networks:
+    - inception
+  build: 
+    context: requirements/wordpress
+    dockerfile: Dockerfile
+  depends_on:
+    - mariadb
+  restart: on-failure
+  expose: 
+    - "9000"                        # C'est le port par defaut sur lequel WordPress écoute pour recevoir des requêtes HTTP.
+                                    # Ici on dit qu'on veut pouvoir accéder à l'application WordPress depuis un autre conteneur ou depuis l'hôte Docker en utilisant le port 9000.
+
+# Les volumes Docker sont des espaces de stockage persistants utilisés par les conteneurs pour stocker des données 
+# qui doivent être conservées même lorsque le conteneur est arrêté ou supprimé.
+
+volumes:
+  wordpress:
+    driver: local                         # creates a local volume on the host machine.
+    driver_opts:
+      type: 'none' 									        # aucun type spécifique
+      o: 'bind'                             # allows the volume to be mounted into a container at a specific location 
+      device: '/home/lmarecha/data/wordpress' # specifies the path on the host machine where the volume should be created
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none' 
+      o: 'bind'										          
+      device: '/home/lmarecha/data/mariadb'
+
+
+networks:
+  inception:
+  driver: bridge      # bridge crée un nouveau réseau de pont sur l'hôte Docker et y connecte tous les conteneurs qui sont attachés au réseau.
+                      # Cela permet aux conteneurs de communiquer entre eux et avec l'hôte en utilisant des adresses IP et des ports.
+
+
+
+
+
+
+
+# Dans ce fichier docker-compose.yml, il y a trois services définis: "mariadb", "nginx" et "wordpress".
+# Chacun de ces services est défini par un bloc de configuration qui décrit comment le service doit être exécuté et comment il doit être connecté aux autres services.
+
+# Voici un résumé de chaque service:
+
+# "mariadb": Ce service exécute une base de données MariaDB dans un conteneur Docker.
+  # Le conteneur est construit à partir de l'image Docker spécifiée dans le fichier "Dockerfile" situé dans le répertoire "requirements/mariadb".
+  # Les variables d'environnement du conteneur sont définies dans le fichier ".env" et le conteneur monte le volume "mariadb" situé à l'emplacement "/var/lib/mysql" sur l'hôte.
+  # Le port 3306 du conteneur est exposé, mais il n'est pas mappé sur un port de l'hôte.
+  # Le conteneur redémarrera sauf si on l'arrête explicitement.
+
+# "nginx": Ce service exécute un serveur Web NGINX dans un conteneur Docker.
+  # Le conteneur est construit à partir de l'image Docker spécifiée dans le fichier "Dockerfile" situé dans le répertoire "requirements/nginx".
+  # Les variables d'environnement du conteneur sont définies dans le fichier ".env" et le conteneur monte le volume "wordpress" situé à l'emplacement "/var/www/wordpress" sur l'hôte. Le port 443 de l'hôte est mappé sur le port 443 du conteneur.
+  # le conteneur redémarrera en cas d'échec. 
+  # Le conteneur dépend du service "wordpress" et fait partie du réseau "inception".
+
+# "wordpress": Ce service exécute l'application WordPress dans un conteneur Docker. 
+  # Le conteneur est construit à partir de l'image Docker spécifiée dans le fichier "Dockerfile" situé dans le répertoire "requirements/wordpress".
+  # Les variables d'environnement du conteneur sont définies dans le fichier ".env" et le conteneur monte le volume "wordpress" situé à l'emplacement "/var/www/wordpress" sur l'hôte. Le port 9000 du conteneur est exposé, mais il n'est pas mappé sur un port de l'hôte.
+  # Le conteneur redémarrera en cas d'échec et dépend du service "mariadb". Il fait également partie du réseau "inception".
