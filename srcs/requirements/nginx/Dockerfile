@@ -25,7 +25,7 @@ RUN 	 openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/ng
 RUN 	mkdir -p /var/run/nginx
 			# on cre un fichier pour y stocker nos fichiers de config nginx
 
-COPY	conf/nginx.conf /etc/nginx/nginx.conf
+# COPY	conf/nginx.conf /etc/nginx/nginx.conf
 			# on copie notre fichier de config nginx pour remplacer celui de base
 
 RUN		chmod 755 /var/www/html 

@@ -25,7 +25,7 @@ RUN         cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6
 RUN         chown -R root:root /var/www/wordpress
                 # on donne les droits a root d'ecrire dans le dossier
 
-COPY        conf/www.comf /etc/php/7.3/fpm/pool.d
+COPY        conf/www.conf /etc/php/7.3/fpm/pool.d
 
 RUN         wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 		        # on install WP-CLI : WordPress Command Line Interface (qui va nous permettre de configurer automatiquement WP
