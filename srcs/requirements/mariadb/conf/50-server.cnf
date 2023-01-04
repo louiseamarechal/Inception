@@ -1,7 +1,6 @@
 [mysqld]
+    socket = /run/mysqld/mysqld.sock
     datadir = /var/lib/mysql # dosier qui va stoker notre database
-    socket  = /run/mysqld/mysqld.sock
-    bind_address=* # precise que toutes les IP du réseau peuvent se connecter
+    bind_address=* 
     port = 3306
     user = mysql
-					

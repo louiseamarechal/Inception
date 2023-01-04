@@ -1,13 +1,45 @@
 Once in the Docker folder :
-  1. docker build <path_to_docker_folder>
-      # this command will build our container
-      # folder where you have your Dockerfile
-      # -t option allow you to give it a name
-          -> docker build -t nginx . ('.' is for current path)
 
-  2. docker image ls
-      # will show you all your images
+    1. docker build <path_to_docker_folder>
+        # this command will build our container
+        # folder where you have your Dockerfile
+        # -t option allow you to give it a name
+            -> docker build -t nginx . ('.' is for current path)
 
-  3. docker run -it nginx
-      # will run your image
-      # -it will open your container's terminal -> to close it 'exit'
+    2. docker image ls
+        # will show you all your images
+
+    3. docker run -it nginx
+        # will run your image
+        # -it will open your container's terminal -> to close it 'exit'
+
+    4. docker start <containerName>
+        # To restart an existing container
+
+    5. docker stop <contanierName>
+        # To stop your running container
+
+    6. docker container ls || docker ps
+        # To check the list of running containers
+
+    7. docker container ls -a || docker ps -a
+        # To get all containers, both running and not running
+
+    8. docker compose -f <path_docker_compose> -d -build
+        # Pour build et demarrer un groupe de conteneurs
+        # -f pour specifierle fichier .yml
+        # -d pour executer le groupe de conteneurs
+        # - build pour les build les images de conteneurs avant de les demarrer
+    
+    9. docker compose -f <path_docker_compose> stop
+        # Pour arreter un groupe de conteneurs Docker lances avec Docker Compose
+
+    10. docker compose -f  <path_docker_compose>  down -v
+        # Pour de detruire les containers et volumes crees avec docker-compose (ne supprime pas les images)
+        # -v pour supprimer les volumes associes aux containers
+
+    11. docker rmi -f $(docker images -a -q)
+        # to delete all images
+
+    12. docker container prune
+        # remove all stopped containers
