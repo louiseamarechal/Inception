@@ -14,6 +14,7 @@ services:                           # liste des services qui composent l'applica
     expose:                         # list des ports qui devront etre exposes par le container
       - "3306"                        # C'est le port par defaut sur lequel le serveur écoute pour recevoir des connexions et des requêtes de bases de données MariaDB
                                       # Ici, on precise qu'on veut pouvoir accéder à la base de données depuis un autre conteneur ou depuis l'hôte Docker en utilisant le port 3306
+ 
   nginx:
     container_name: nginx
     networks:
