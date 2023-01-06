@@ -1,6 +1,0 @@
-Error: The 'wp-config.php' file already exists.
-wordpress  | Error: Parameter errors:
-wordpress  |  missing --url parameter (The address of the new site.)
-wordpress  |  missing --admin_email parameter (The email address for the admin user.)
-wordpress  | Error: The site you have requested is not installed.
-wordpress  | Run `wp core install` to create database tables.

@@ -73,10 +73,6 @@ networks:
 
 
 
-
-
-
-
 # Dans ce fichier docker-compose.yml, il y a trois services définis: "mariadb", "nginx" et "wordpress".
 # Chacun de ces services est défini par un bloc de configuration qui décrit comment le service doit être exécuté et comment il doit être connecté aux autres services.
 
