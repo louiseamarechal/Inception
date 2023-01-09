@@ -8,7 +8,7 @@ RUN         apt-get -y install wget
                 # apt permet d'effectuer l'installation et la désinstallation de paquets
                 # wget est le programme en ligne de commande qui va nous permettre de telecharger des fichiers depuis le Web, on va s'en servir notamment pour telecharger Wordpress
 
-RUN         apt-get -y install unzip
+# RUN         apt-get -y install unzip
 
 RUN         apt-get install -y php7.3\
                                 php-fpm\
