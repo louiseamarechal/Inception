@@ -13,8 +13,10 @@ COPY  conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY  /conf/configure.sh  /var/www/configure.sh
 
-RUN   bash /var/www/configure.sh
-# RUN   service mysql start && var/www/configure.sh
+RUN   chmod +x /var/www/configure.sh
+
+# RUN   ["/var/www/configure.sh"]
+# RUN   service mysql start
              # on demarre MySQLservice permet de démarrer MySQL avec la commande associée)
 
 # RUN   mysql -e 'CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};'
@@ -28,3 +30,5 @@ RUN   bash /var/www/configure.sh
 
 
 # CMD   [ "mysqld" ]
+
+ENTRYPOINT [ "/var/www/configure.sh" ]

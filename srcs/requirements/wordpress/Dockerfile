@@ -45,6 +45,6 @@ COPY        /conf/auto_config.sh  /tmp/auto_config.sh
 
 COPY        /conf/index.html /tmp/index.html
 
-# CMD        [ "sh", "/tmp/auto_config.sh" ]
+CMD        [ "sh", "/tmp/auto_config.sh" ]
 # ENTRYPOINT  [ "sh", "/tmp/auto_config.sh" ]
                 # on demande a notre container d'executer ce fichier
