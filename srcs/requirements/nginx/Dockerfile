@@ -2,7 +2,9 @@
 FROM	debian:buster
 			# On utilise FROM pour indiquer sur quel OS on veut faire tourner notre machine
 
-RUN		apt update
+RUN		apt update -y
+
+RUN		apt upgrade -y
 
 RUN		apt install nginx -y
 			# on precise d'installer nginx au debut, sinon on le perd des qu'on ferme notre container
@@ -28,10 +30,10 @@ RUN 	mkdir -p /var/run/nginx
 COPY	conf/nginx.conf /etc/nginx/nginx.conf
 			# on copie notre fichier de config nginx pour remplacer celui de base
 
-RUN		chmod +x /var/www/html 
+RUN		chmod 755 /var/www/*
 			# notre root principal
 
-RUN		chown -R www-data:www-data /var/www/html
+RUN		chown -R www-data:www-data /var/www/*
 			# l’utilisateur principal
 
 CMD		[ "nginx", "-g", "daemon off;" ]

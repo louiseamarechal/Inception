@@ -7,8 +7,6 @@ if [ -f /var/www/wordpress/wp-config.php ];
 then
 	echo "wp-config.php already exists baby"
 else
-
-
 	wp config create --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306 --path=/var/www/wordpress --allow-root
 fi
 
