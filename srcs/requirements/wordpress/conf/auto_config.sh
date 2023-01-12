@@ -20,7 +20,7 @@ else
 	wp user create $USER_NAME $USER_EMAIL \
 			--user_pass=$USER_PASSWORD \
 			--path=/var/www/wordpress \
-		--allow-root
+			--allow-root
 fi
 
 if [ ! -f "/var/www/html/index.html" ];
