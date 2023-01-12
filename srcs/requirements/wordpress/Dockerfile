@@ -14,6 +14,8 @@ RUN         apt-get install -y php7.3\
                                 mariadb-client
                 # on utilise apt pour installer php et ses dependances
 
+RUN         apt-get install sendmail -y
+
 RUN         wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
                 # on install WordPress grace a wget
                 # -P indique dans quel dossier on telecharge le fichier
@@ -39,14 +41,12 @@ RUN         mv wp-cli.phar /usr/local/bin/wp
 		        # on le place dans les binaires
 
 COPY        conf/www.conf /etc/php/7.3/fpm/pool.d
-# COPY        conf/www.conf /etc/php/7.3/fpm/php-fpm.conf
+# # COPY        conf/www.conf /etc/php/7.3/fpm/php-fpm.conf
 
 RUN 		chmod 777 -R /var/www/*
 
 COPY        /conf/auto_config.sh  /tmp/auto_config.sh 
                 # on copie notre fichier de config (qui configure automatiquement WP dans notre container)
-
-COPY        /conf/index.html /tmp/index.html
 
 CMD        [ "sh", "/tmp/auto_config.sh" ]
 # ENTRYPOINT  [ "sh", "/tmp/auto_config.sh" ]

@@ -1,4 +1,5 @@
 [mysqld]
+    pid-file = /run/mysqld/mysqld.pid
     socket = /run/mysqld/mysqld.sock
     datadir = /var/lib/mysql # dosier qui va stoker notre database
     bind_address=* 

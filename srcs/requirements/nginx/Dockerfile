@@ -11,6 +11,12 @@ RUN		apt install nginx -y
 			# -y permet de preciser 'yes'
 			# (apt demande souvent de valider une action mais quand Docker build un container on a pas de prompt)
 
+# RUN         apt-get install -y php7.3\
+#                                 php-fpm\
+#                                 php-mysql\
+#                                 mariadb-client
+                # on utilise apt pour installer php et ses dependances
+
 RUN		mkdir -p /etc/nginx/ssl
 			# on veut stocker le certificat et la clef TSL (connexion sécurisée)
 
@@ -27,8 +33,9 @@ RUN 	 openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/ng
 RUN 	mkdir -p /var/run/nginx
 			# on cre un fichier pour y stocker nos fichiers de config nginx
 
-COPY	conf/louisea.conf etc/nginx/conf.d
+COPY	conf/default etc/nginx/sites-available
 
+# RUN		ln -s /etc/nginx/sites-available/inception.conf /etc/nginx/sites-enabled/inception.conf
 # COPY	conf/nginx.conf /etc/nginx/nginx.conf
 			# on copie notre fichier de config nginx pour remplacer celui de base
 

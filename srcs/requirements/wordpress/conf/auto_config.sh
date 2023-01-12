@@ -7,6 +7,8 @@ if [ -f /var/www/wordpress/wp-config.php ];
 then
 	echo "wp-config.php already exists baby"
 else
+	cd /var/www/wordpress
+
 	wp config create --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306 --path=/var/www/wordpress --allow-root
 
 	wp core install --url=lmarecha.42.fr/wordpress \
@@ -23,10 +25,10 @@ else
 			--allow-root
 fi
 
-if [ ! -f "/var/www/html/index.html" ];
-then
-	mv /tmp/index.html /var/www/html/index.html
-fi
+# if [ ! -f "/var/www/wordpress/index.html" ];
+# then
+# 	mv /tmp/index.html /var/www/wordpress/index.html
+# fi
 
 if [ ! -f "/run/php" ]
 then
