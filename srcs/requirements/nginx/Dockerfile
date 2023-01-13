@@ -11,12 +11,6 @@ RUN		apt install nginx -y
 			# -y permet de preciser 'yes'
 			# (apt demande souvent de valider une action mais quand Docker build un container on a pas de prompt)
 
-# RUN         apt-get install -y php7.3\
-#                                 php-fpm\
-#                                 php-mysql\
-#                                 mariadb-client
-                # on utilise apt pour installer php et ses dependances
-
 RUN		mkdir -p /etc/nginx/ssl
 			# on veut stocker le certificat et la clef TSL (connexion sécurisée)
 
@@ -30,19 +24,15 @@ RUN 	 openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/ng
 				# on utilise -out et -keyout pour lui dire ou stocker le certif et la cle
 				# on ajoute -subj pour eviter la encore de se faire avoir par un prompt inexistant -> ca permer de pre-remplir des infos pour le certif
 
-RUN 	mkdir -p /var/run/nginx
+# RUN 	mkdir -p /var/run/nginx
 			# on cre un fichier pour y stocker nos fichiers de config nginx
 
-COPY	conf/default etc/nginx/sites-available
+COPY	conf/default /etc/nginx/sites-available
 
-# RUN		ln -s /etc/nginx/sites-available/inception.conf /etc/nginx/sites-enabled/inception.conf
-# COPY	conf/nginx.conf /etc/nginx/nginx.conf
-			# on copie notre fichier de config nginx pour remplacer celui de base
-
-RUN		chmod 755 /var/www/*
+# RUN		chmod 755 /var/www/*
 			# notre root principal
 
-RUN		chown -R www-data:www-data /var/www/*
+# RUN		chown -R www-data:www-data /var/www/*
 			# l’utilisateur principal
 
 CMD		[ "nginx", "-g", "daemon off;" ]
