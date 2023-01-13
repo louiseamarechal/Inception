@@ -1,17 +1,10 @@
 sleep 10 
-	# on veut etre sur que MariaDB c'est lance correctement avant de commencer la config WP
-
-# if [ ! -f "/var/www/wordpress" ]
-# then
-# 	mkdir /var/www/wordpress
-# fi
 
 if [ ! -f "/run/php" ]
 then
 	mkdir /run/php
 	touch /run/php/php7.3-fpm.pid
 fi
-
 
 if [ -f "/var/www/wordpress/wp-config.php" ];
 then

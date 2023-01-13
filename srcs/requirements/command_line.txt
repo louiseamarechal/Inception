@@ -43,3 +43,7 @@ Once in the Docker folder :
 
     12. docker container prune
         # remove all stopped containers
+
+Mariadb MySql :
+
+    1. mysql -u USERNAME -pPASSWORD -h HOSTNAMEORIP DATABASENAME 

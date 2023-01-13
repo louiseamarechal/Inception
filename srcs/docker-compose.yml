@@ -1,5 +1,5 @@
 version: "3.9"
-services:                           # liste des services qui composent l'application
+services:
   mariadb:                          # On precise qu'on run le container avec la database MariaDB
     container_name: mariadb         # Le nom du container qui va etre cree
     networks:                       # La liste des networks auquel le container devra etre connecte
@@ -19,7 +19,7 @@ services:                           # liste des services qui composent l'applica
     container_name: nginx
     networks:
       - inception
-    depends_on:                       # on precise qu'on ne veut pas démarrer nginx tant que WordPress n'a pas démarré.
+    depends_on:
       - wordpress
     build: 
       context: requirements/nginx
@@ -28,8 +28,8 @@ services:                           # liste des services qui composent l'applica
     volumes:
       - wordpress:/var/www/wordpress
     ports:
-      - "443:443"                   # on indique le port qui sera exposé a la machine locale
-    restart: on-failure             # le container redémarrera uniquement en cas de crash.
+      - "443:443"
+    restart: on-failure
 
   wordpress:
     container_name: wordpress
@@ -45,19 +45,15 @@ services:                           # liste des services qui composent l'applica
       - mariadb
     restart: on-failure
     expose: 
-      - "9000"                        # C'est le port par defaut sur lequel WordPress écoute pour recevoir des requêtes HTTP.
-                                    # Ici on dit qu'on veut pouvoir accéder à l'application WordPress depuis un autre conteneur ou depuis l'hôte Docker en utilisant le port 9000.
-
-# Les volumes Docker sont des espaces de stockage persistants utilisés par les conteneurs pour stocker des données 
-# qui doivent être conservées même lorsque le conteneur est arrêté ou supprimé.
+      - "9000"
 
 volumes:
   wordpress:
-    driver: local                             # creates a local volume on the host machine.
+    driver: local
     driver_opts:
-      type: 'none'                            # aucun type spécifique
-      o: 'bind'                               # allows the volume to be mounted into a container at a specific location 
-      device: '/home/lmarecha/data/wordpress' # specifies the path on the host machine where the volume should be created
+      type: 'none'
+      o: 'bind'
+      device: '/home/lmarecha/data/wordpress'
   mariadb:
     driver: local
     driver_opts:
